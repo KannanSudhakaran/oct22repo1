@@ -86,6 +86,7 @@ TaskFlow provides a single place to manage and track daily work.
 - **API:** REST API using JSON
 - **Authentication:** Login-based authentication
 - **Testing:** Basic API and application testing
+- **Monitoring:** The API exposes a health check endpoint for deployment verification and uptime monitoring
 
 ### 9. Expected Deliverables
 

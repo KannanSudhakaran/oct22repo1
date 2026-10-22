@@ -6,7 +6,7 @@ Provide a simple, unauthenticated API endpoint that reports whether the TaskFlow
 
 ## Background / Context
 
-`PRD.md` does not mention health checks, monitoring, or uptime requirements — this is an operational/infrastructure concern that sits alongside the product features rather than inside them. As the backend moves toward real deployment (see recent discussion of deploying the `client/` and `server/` apps), there is currently no way for an external system or a person to ask "is the API up and able to reach its dependencies?" without hitting an authenticated or business-logic endpoint.
+Per `PRD.md` Section 8 (Technology Requirements): "Monitoring: The API exposes a health check endpoint for deployment verification and uptime monitoring." This is an operational/infrastructure concern that sits alongside the product features rather than inside them. As the backend moves toward real deployment (see recent discussion of deploying the `client/` and `server/` apps), there is currently no way for an external system or a person to ask "is the API up and able to reach its dependencies?" without hitting an authenticated or business-logic endpoint.
 
 This spec covers only a basic liveness/readiness signal for the API. It does not introduce new user-facing functionality and does not change any existing authentication, task, category, or step behavior.
 
