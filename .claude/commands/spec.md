@@ -51,8 +51,8 @@ From `$ARGUMENTS`, extract:
    - Example: if `_specs/01-login.md` and `_specs/02-dashboard.md` exist, `spec_number` is `03`.
 
 4. `branch_name`  
-   - Format: `claude/feature/<feature_slug>`  
-   - Example: `claude/feature/card-component`.
+   - Format: `claude/feature/<spec_number>-<feature_slug>`  
+   - Example: `claude/feature/03-card-component`.
 
 If you cannot infer a sensible `feature_title` and `feature_slug`, ask the user to clarify instead of guessing.
 
