@@ -7,7 +7,7 @@ async function migrate() {
   const schemaPath = path.join(__dirname, 'schema.sql');
   const schema = fs.readFileSync(schemaPath, 'utf8');
   await pool.query(schema);
-  console.log('Migration complete: users table ready.');
+  console.log('Migration complete: users, categories, and tasks tables ready.');
   await pool.end();
 }
 

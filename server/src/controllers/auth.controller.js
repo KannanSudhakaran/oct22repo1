@@ -21,20 +21,31 @@ async function register(req, res, next) {
 
     const passwordHash = await bcrypt.hash(password, BCRYPT_ROUNDS);
 
-    let result;
+    const client = await pool.connect();
+    let userRow;
     try {
-      result = await pool.query(
+      await client.query('BEGIN');
+      const result = await client.query(
         'INSERT INTO users (email, password_hash) VALUES ($1, $2) RETURNING id, email, role',
         [email, passwordHash]
       );
+      userRow = result.rows[0];
+      await client.query(
+        `INSERT INTO categories (user_id, name) VALUES ($1, 'Office'), ($1, 'Personal'), ($1, 'Financial')`,
+        [userRow.id]
+      );
+      await client.query('COMMIT');
     } catch (err) {
+      await client.query('ROLLBACK');
       if (err.code === '23505') {
         return res.status(409).json({ error: { code: 'EMAIL_IN_USE', message: 'Email is already registered.' } });
       }
       throw err;
+    } finally {
+      client.release();
     }
 
-    const user = toPublicUser(result.rows[0]);
+    const user = toPublicUser(userRow);
     const token = signToken(user);
     setAuthCookie(res, token);
     return res.status(201).json({ user });
