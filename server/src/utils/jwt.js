@@ -21,11 +21,13 @@ function msFromExpiresIn(expiresIn) {
   return value * unitMs[unit];
 }
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 function setAuthCookie(res, token) {
   res.cookie(COOKIE_NAME, token, {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
     maxAge: msFromExpiresIn(process.env.JWT_EXPIRES_IN),
   });
 }
@@ -33,8 +35,8 @@ function setAuthCookie(res, token) {
 function clearAuthCookie(res) {
   res.clearCookie(COOKIE_NAME, {
     httpOnly: true,
-    sameSite: 'lax',
-    secure: process.env.NODE_ENV === 'production',
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction,
   });
 }
 
