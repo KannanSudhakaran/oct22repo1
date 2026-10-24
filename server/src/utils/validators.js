@@ -17,6 +17,7 @@ const TASK_PRIORITIES = ['low', 'medium', 'high'];
 const TASK_STATUSES = ['todo', 'in_progress', 'blocked', 'done'];
 const TITLE_MAX_LENGTH = 200;
 const DESCRIPTION_MAX_LENGTH = 2000;
+const CATEGORY_NAME_MAX_LENGTH = 100;
 
 function isValidPriority(value) {
   return TASK_PRIORITIES.includes(value);
@@ -52,7 +53,16 @@ function validateTaskPayload({ title, description, categoryId, priority, dueDate
   return null;
 }
 
+function validateCategoryPayload({ name }) {
+  if (!isNonEmpty(name)) return 'Name is required.';
+  if (name.trim().length > CATEGORY_NAME_MAX_LENGTH) {
+    return `Name must be ${CATEGORY_NAME_MAX_LENGTH} characters or fewer.`;
+  }
+  return null;
+}
+
 module.exports = {
   normalizeEmail, isNonEmpty, validateCredentials,
   TASK_PRIORITIES, TASK_STATUSES, isValidPriority, isValidStatus, isValidDueDate, validateTaskPayload,
+  CATEGORY_NAME_MAX_LENGTH, validateCategoryPayload,
 };
